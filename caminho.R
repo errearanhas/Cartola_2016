@@ -1,1 +1,0 @@
-caminho.arquivos <- "~/Dropbox/cartola/Cartola_2016/Cartola_2016/" 
