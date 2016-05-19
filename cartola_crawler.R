@@ -1,19 +1,24 @@
 require(jsonlite)
+require(plyr)
+source(caminho.R)
 
-#download.file("https://api.cartolafc.globo.com/atletas/mercado","Rodada_01")
+rodada <- "Rodada_01"
 
+baixar.json <- function(caminho, rodada){
+  download.file(caminho,rodada)
+}
+
+
+# mudando tudo
 # Lendo dado pelo formato Json
-dados <- fromJSON("Dropbox/cartola/Cartola_2016/Cartola_2016/Rodada_01")
+dados <- fromJSON(paste(caminho,rodada))
 
 # separando dados dos atletas
 atletas.dados <- dados$atletas 
 
-partida.dados <- dados$atletas$partida
+clubes.dados <- do.call(rbind, dados$clubes)
+posicoes.dados <- do.call(rbind, dados$posicoes)
+status.dados <- do.call(rbind, dados$status)
 
-dados$clube
-
-# #Calcular a média dos dois grupos
-# # http://stackoverflow.com/questions/3505701/r-grouping-functions-sapply-vs-lapply-vs-apply-vs-tapply-vs-by-vs-aggrega
-# # http://stackoverflow.com/questions/15214472/use-object-names-within-a-list-in-lapply-ldply
-# lapply(dlply(info, .(pagina), function(x) x), function(x) mean(x$Votos.nominais, na.rm=T))
+escudos.links <- do.call(rbind,dados$clubes)
 
