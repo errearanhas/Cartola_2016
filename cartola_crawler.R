@@ -1,17 +1,23 @@
 require(jsonlite)
-require(plyr)
-source(caminho.R)
+#require(plyr)
+setwd("~/Dropbox/cartola/Cartola_2016/Cartola_2016/")
+source("caminho.R",local = TRUE)
 
-rodada <- "Rodada_01"
+rodada <- "Rodada_02"
 
-baixar.json <- function(caminho, rodada){
-  download.file(caminho,rodada)
+site <- "https://api.cartolafc.globo.com/atletas/mercado"
+
+baixar.json <- function(cam, rodada){
+  download.file(cam, rodada)
 }
 
-
+paste(caminho,rodada,sep = "")
 # mudando tudo
 # Lendo dado pelo formato Json
-dados <- fromJSON(paste(caminho,rodada))
+
+baixar.json(site,rodada)
+
+dados <- fromJSON(paste(caminho,rodada,sep = ""))
 
 # separando dados dos atletas
 atletas.dados <- dados$atletas 
