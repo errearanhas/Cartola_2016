@@ -3,7 +3,7 @@ require(jsonlite)
 setwd("~/Dropbox/cartola/Cartola_2016/Cartola_2016/")
 source("caminho.R",local = TRUE)
 
-rodada <- "Rodada_02"
+rodada <- "Rodada_03"
 
 site <- "https://api.cartolafc.globo.com/atletas/mercado"
 
