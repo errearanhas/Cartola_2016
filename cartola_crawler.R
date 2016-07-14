@@ -1,30 +1,59 @@
 require(jsonlite)
 #require(plyr)
-setwd("~/Dropbox/cartola/Cartola_2016/Cartola_2016/")
-source("caminho.R",local = TRUE)
 
-rodada <- "Rodada_03"
+API <-"https://api.cartolafc.globo.com/atletas/mercado"
+rodada <- "Rodada_14"
 
-site <- "https://api.cartolafc.globo.com/atletas/mercado"
+dados <- fromJSON(rodada);
 
-baixar.json <- function(cam, rodada){
-  download.file(cam, rodada)
+# criando proposta de data frame
+atletas <- data.frame(nome=dados$atletas$nome,
+                      apelido=dados$atletas$apelido,
+                      status=dados$atletas$status_id,
+                      posicao=dados$atletas$posicao_id,
+                      rodada_id=dados$atletas$rodada_id,
+                      clube_casa=dados$atletas$partida$clube_casa_id,
+                      clube=dados$atletas$clube_id,
+                      pontos_ult=dados$atletas$pontos_num,
+                      preco=dados$atletas$preco_num,
+                      variacao=dados$atletas$variacao_num,
+                      media=dados$atletas$media_num,
+                      qtd_jogos=dados$atletas$jogos_num,
+                      PE=dados$atletas$scout$PE,
+                      DD=dados$atletas$scout$DD,
+                      GS=dados$atletas$scout$GS,
+                      FC=dados$atletas$scout$FC,
+                      RB=dados$atletas$scout$RB,
+                      SG=dados$atletas$scout$SG,
+                      FD=dados$atletas$scout$FD,
+                      FF=dados$atletas$scout$FF,
+                      FS=dados$atletas$scout$FS,
+                      I=dados$atletas$scout$I,
+                      CA=dados$atletas$scout$CA,
+                      A=dados$atletas$scout$A,
+                      G=dados$atletas$scout$G,
+                      FT=dados$atletas$scout$FT,
+                      CV=dados$atletas$scout$CV,
+                      DP=dados$atletas$scout$DP,
+                      PP=dados$atletas$scout$PP);
+
+#exportando em xls
+write.table(atletas, file="rodada_14.xls",sep="\t");
+
+#consolidando todas as rodadas (proposta de data frame acima) e exportando em um arquivo só
+apoio <- c()
+
+for (i in 1:14) {
+  apoio <- append(apoio,paste(getwd(),"/rodada_",i,".xls",sep=""))
 }
 
-paste(caminho,rodada,sep = "")
-# mudando tudo
-# Lendo dado pelo formato Json
+juncao <- do.call(rbind, lapply(apoio, read.csv, header = TRUE,sep=""))
 
-baixar.json(site,rodada)
+write.table(juncao, file="total.xls",sep="\t");
 
-dados <- fromJSON(paste(caminho,rodada,sep = ""))
-
-# separando dados dos atletas
-atletas.dados <- dados$atletas 
-
+# data frames com os dados dos clubes, posições dos atletas, status dos atletas e escudos dos times
 clubes.dados <- do.call(rbind, dados$clubes)
 posicoes.dados <- do.call(rbind, dados$posicoes)
 status.dados <- do.call(rbind, dados$status)
-
 escudos.links <- do.call(rbind,dados$clubes)
 
