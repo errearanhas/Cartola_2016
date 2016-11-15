@@ -7,7 +7,7 @@ setwd("C:/BKP-Renato/Renato Aranha/Desktop/Meus Documentos/Pessoal/R/cartola_201
 setwd("C:/BKP-Renato/Renato Aranha/Desktop/Meus Documentos/Pessoal/R/cartola_2016/backup_rodadas/");
 
 API <-"https://api.cartolafc.globo.com/atletas/mercado"
-rodada <- "Rodada_25"
+rodada <- "Rodada_33"
 
 download.file(API,rodada);
 dados <- fromJSON(rodada);
